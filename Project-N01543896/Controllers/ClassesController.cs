@@ -9,7 +9,7 @@ namespace Project_N01543896.Controllers
 {
     public class ClassesController : Controller
     {
-        // GET: Student
+        // GET: Classes
         public ActionResult Index()
         {
             return View();
@@ -23,7 +23,7 @@ namespace Project_N01543896.Controllers
             return View(Classes);
         }
 
-        //GET : /Student/Show/{id}
+        //GET : /Classes/Show/{id}
         public ActionResult Show(int id)
         {
             ClassesDataController controller = new ClassesDataController();
