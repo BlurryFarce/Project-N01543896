@@ -17,10 +17,18 @@ namespace Project_N01543896.Controllers
         }
 
         //GET : /Teacher/List
-        public ActionResult List()
+        public ActionResult List(string searchKey = null, decimal? salaryKey = null)
         {
             TeacherDataController controller = new TeacherDataController();
-            IEnumerable<Teacher> Teachers = controller.ListTeachers();
+            IEnumerable<Teacher> Teachers = controller.ListTeachers(searchKey);
+            if (!string.IsNullOrEmpty(searchKey))
+            {
+                Teachers = controller.ListTeachers(searchKey);
+            }
+            else if (salaryKey.HasValue)
+            {
+                Teachers = controller.ListTeachersBySalary(salaryKey.Value);
+            }
             return View(Teachers);
         }
 
@@ -31,7 +39,7 @@ namespace Project_N01543896.Controllers
             Teacher NewTeacher = controller.FindTeacher(id);
 
             ClassesDataController classesDataController = new ClassesDataController();
-            IEnumerable <Classes> NewClassList = controller.FindCLassesByTeacher(id);
+            IEnumerable<Classes> NewClassList = controller.FindCLassesByTeacher(id);
 
             TeacherClassViewData ViewModel = new TeacherClassViewData();
             ViewModel.teacher = NewTeacher;

@@ -9,8 +9,8 @@ using Project_N01543896.Models;
 
 namespace Project_N01543896.Controllers
 {
-    public class ClassesDataController : ApiController {
-
+    public class ClassesDataController : ApiController
+    {
         private SchoolDbContext School = new SchoolDbContext();
 
         /// <summary>
@@ -22,7 +22,8 @@ namespace Project_N01543896.Controllers
         /// <example>GET api/ClassesData/ListClasses</example>
         [HttpGet]
         [Route("api/ClassesData/ListClasses")]
-        public IEnumerable<Classes> ListClasses() {
+        public IEnumerable<Classes> ListClasses()
+        {
             MySqlConnection Conn = School.AccessDatabase();
 
             Conn.Open();
@@ -35,8 +36,8 @@ namespace Project_N01543896.Controllers
 
             List<Classes> ClassesList = new List<Classes> { };
 
-            while (ResultSet.Read()) {
-
+            while (ResultSet.Read())
+            {
                 int ClassId = Convert.ToInt32(ResultSet["classid"]);
                 string ClassCode = ResultSet["classcode"].ToString();
                 int TeacherId = Convert.ToInt32(ResultSet["teacherid"]);
@@ -66,9 +67,11 @@ namespace Project_N01543896.Controllers
         /// </summary>
         /// <param name="id">The class id primary key</param>
         /// <returns>A classes object</returns>
+        /// <example>GET api/ClassesData/FindClass/5</example>
         [HttpGet]
         [Route("api/ClassData/FindClass/{id}")]
-        public Classes FindClass(int id) {
+        public Classes FindClass(int id)
+        {
             Classes Class = new Classes();
 
             MySqlConnection Conn = School.AccessDatabase();
@@ -81,8 +84,8 @@ namespace Project_N01543896.Controllers
 
             MySqlDataReader ResultSet = cmd.ExecuteReader();
 
-            while (ResultSet.Read()) {
-
+            while (ResultSet.Read())
+            {
                 int ClassId = Convert.ToInt32(ResultSet["classid"]);
                 string ClassCode = ResultSet["classcode"].ToString();
                 int TeacherId = Convert.ToInt32(ResultSet["teacherid"]);

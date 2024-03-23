@@ -6692,7 +6692,7 @@ textarea.form-control-lg {
 }
 
 .text-bg-primary {
-  color: #fff !important;
+  color: #0197F6 !important;
   background-color: RGBA(13, 110, 253, var(--bs-bg-opacity, 1)) !important;
 }
 
