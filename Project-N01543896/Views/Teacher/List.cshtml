@@ -3,14 +3,12 @@
     ViewBag.Title = "List";
 }
 
-<h2>List</h2>
-<p>This page should be showing information about all teachers</p>
+<h2 class="text-center">List of Teachers</h2>
 
 <div id="containerlist">
-    <h2>List of Teachers</h2>
     @foreach (var teacher in Model) {
         <div class="listitem row">
-            <div class="col-md-12"><a href="/Teacher/Show/@teacher.teacherid">@teacher.teacherfname @teacher.teacherlname</a></div>
+            <div class="col-md-12 m-2"><a href="/Teacher/Show/@teacher.teacherId">@teacher.teacherFName @teacher.teacherLName</a></div>
         </div>
     }
 </div>

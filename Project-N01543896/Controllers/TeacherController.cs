@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Project_N01543896.Models;
+using Project_N01543896.ViewModels;
 
 namespace Project_N01543896.Controllers
 {
@@ -15,7 +16,7 @@ namespace Project_N01543896.Controllers
             return View();
         }
 
-        //GET : /Author/List
+        //GET : /Teacher/List
         public ActionResult List()
         {
             TeacherDataController controller = new TeacherDataController();
@@ -23,13 +24,20 @@ namespace Project_N01543896.Controllers
             return View(Teachers);
         }
 
-        //GET : /Author/Show/{id}
+        //GET : /Teacher/Show/{id}
         public ActionResult Show(int id)
         {
             TeacherDataController controller = new TeacherDataController();
             Teacher NewTeacher = controller.FindTeacher(id);
 
-            return View(NewTeacher);
+            ClassesDataController classesDataController = new ClassesDataController();
+            IEnumerable <Classes> NewClassList = controller.FindCLassesByTeacher(id);
+
+            TeacherClassViewData ViewModel = new TeacherClassViewData();
+            ViewModel.teacher = NewTeacher;
+            ViewModel.classes = NewClassList;
+
+            return View(ViewModel);
         }
     }
 }
