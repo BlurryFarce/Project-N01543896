@@ -77,7 +77,11 @@ namespace Project_N01543896.Controllers
 
             MySqlCommand cmd = Conn.CreateCommand();
 
-            cmd.CommandText = "Select * from students where studentid = " + id;
+            cmd.CommandText = "Select * from students where studentid = @id ";
+
+            cmd.Parameters.AddWithValue("@id", id);
+
+            cmd.Prepare();
 
             MySqlDataReader ResultSet = cmd.ExecuteReader();
 

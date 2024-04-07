@@ -80,7 +80,11 @@ namespace Project_N01543896.Controllers
 
             MySqlCommand cmd = Conn.CreateCommand();
 
-            cmd.CommandText = "Select * from classes where classid = " + id;
+            cmd.CommandText = "Select * from classes where classid = @id ";
+
+            cmd.Parameters.AddWithValue("@id", id);
+
+            cmd.Prepare();
 
             MySqlDataReader ResultSet = cmd.ExecuteReader();
 

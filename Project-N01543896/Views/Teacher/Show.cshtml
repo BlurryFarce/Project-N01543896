@@ -4,18 +4,20 @@
 }
 
 <h2>Show</h2>
-
-<a class="navlink" href="/Teacher/List">Back To Teachers</a>
-<div id="containershow">
-    <h2>@Model.teacher.teacherFName @Model.teacher.teacherLName</h2>
-    <p class="fw-bold">Hired on : @Model.teacher.hireDate.ToShortDateString()</p>
-    <p class="fw-bold">Salary : @Model.teacher.salary</p>
-    <p class="fw-bold">Classes Taught</p>
-    <div id="containerlist">
-        @foreach (var classes in Model.classes) {
-            <div class="listitem row">
-                <div class="col-md-12 mt-1 mb-1"><a href ="/Classes/Show/@classes.classId">@classes.classCode - @classes.className</a></div>
-            </div>
-        }
+<nav>
+    <a class="navlink" href="/Teacher/List">Back To Teachers</a>
+    <a class="dellink" href="/Teacher/DeleteConfirm/@Model.teacher.teacherId">Delete</a>
+</nav>
+    <div id="containershow">
+        <h2>@Model.teacher.teacherFName @Model.teacher.teacherLName</h2>
+        <p class="fw-bold">Hired on : @Model.teacher.hireDate.ToShortDateString()</p>
+        <p class="fw-bold">Salary : @Model.teacher.salary</p>
+        <p class="fw-bold">Classes Taught</p>
+        <div id="containerlist">
+            @foreach (var classes in Model.classes) {
+                <div class="listitem row">
+                    <div class="col-md-12 mt-1 mb-1"><a href="/Classes/Show/@classes.classId">@classes.classCode - @classes.className</a></div>
+                </div>
+            }
+        </div>
     </div>
-</div>
