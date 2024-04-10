@@ -49,11 +49,9 @@ namespace Project_N01543896.Controllers
             return View(ViewModel);
         }
 
-        //POST : /Author/Add
+        //POST : /teacher/Add
         [HttpPost]
         public ActionResult Add(string TeacherFname, string TeacherLname, string EmployeeNumber, decimal Salary) {
-            //Identify that this method is running
-            //Identify the inputs provided from the form
 
             Debug.WriteLine("This is the Add teacher method");
             Debug.WriteLine(TeacherFname);
@@ -87,13 +85,13 @@ namespace Project_N01543896.Controllers
             return View();
         }
 
-        //GET : /Author/Ajax_New
+        //GET : /Teacher/Ajax_New
         public ActionResult Ajax_New() {
             return View();
 
         }
 
-        //GET : /Author/DeleteConfirm/{id}
+        //GET : /Teacher/DeleteConfirm/{id}
         public ActionResult DeleteConfirm(int id) {
             TeacherDataController controller = new TeacherDataController();
             Teacher NewTeacher = controller.FindTeacher(id);

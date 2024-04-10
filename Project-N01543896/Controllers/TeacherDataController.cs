@@ -234,8 +234,8 @@ namespace Project_N01543896.Controllers
         /// POST api/TeacherData/AddTeacher 
         /// FORM DATA / POST DATA / REQUEST BODY 
         /// {
-        ///	"AuthorFname":"Vaibhav",
-        ///	"AuthorLname":"Baria",
+        ///	"TeacherFname":"Vaibhav",
+        ///	"TeacherLname":"Baria",
         ///	"EmployeeNumber":"T666",
         ///	"Salary":"60"
         /// }
@@ -243,8 +243,6 @@ namespace Project_N01543896.Controllers
         [HttpPost]
         [EnableCors(origins: "*", methods: "*", headers: "*")]
         public void AddTeacher([FromBody] Teacher NewTeacher) {
-
-            
 
 
             MySqlConnection Conn = School.AccessDatabase();
@@ -270,10 +268,12 @@ namespace Project_N01543896.Controllers
         }
 
         /// <summary>
-        /// Deletes a teacher from the Database if the ID of that teacher exists. Does NOT maintain relational integrity.
+        /// Deletes a teacher from the Database if the ID of that teacher exists.
         /// </summary>
         /// <param name="id">The ID of the Teacher.</param>
-        /// <example>POST /api/TeacherData/DeleteDelete/3</example>
+        /// <example>POST /api/TeacherData/DeleteDelete/3 
+        /// redirects to Delete Confirmation page
+        /// </example>
         [HttpPost]
         [Route("api/TeacherData/DeleteTeacher/{id}")]
         public void DeleteTeacher(int id) {
@@ -281,14 +281,23 @@ namespace Project_N01543896.Controllers
           
             Conn.Open();
 
-            MySqlCommand cmd = Conn.CreateCommand();
+            //SQL query to remove the relation of associated teacher from the classes table
+            MySqlCommand updateCmd = Conn.CreateCommand();
 
-            //SQL QUERY
-            cmd.CommandText = "Delete from teachers where teacherid=@id";
-            cmd.Parameters.AddWithValue("@id", id);
-            cmd.Prepare();
+            updateCmd.CommandText = "UPDATE classes SET teacherid = NULL WHERE teacherid = @id";
+            updateCmd.Parameters.AddWithValue("@id", id);
+            updateCmd.Prepare();
+            updateCmd.ExecuteNonQuery();
 
-            cmd.ExecuteNonQuery();
+            //SQL query to delete the teacher
+            MySqlCommand deleteCmd = Conn.CreateCommand();
+           
+            deleteCmd.CommandText = "Delete from teachers where teacherid=@id";
+
+            deleteCmd.Parameters.AddWithValue("@id", id);
+            deleteCmd.Prepare();
+
+            deleteCmd.ExecuteNonQuery();
 
             Conn.Close();
 

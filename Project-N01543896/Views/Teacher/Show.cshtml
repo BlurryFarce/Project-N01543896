@@ -16,7 +16,7 @@
         <div id="containerlist">
             @foreach (var classes in Model.classes) {
                 <div class="listitem row">
-                    <div class="col-md-12 mt-1 mb-1"><a href="/Classes/Show/@classes.classId">@classes.classCode - @classes.className</a></div>
+                    <div class="col-md-12 mt-1 mb-1 text-decoration-none"><a href="/Classes/Show/@classes.classId">@classes.classCode - @classes.className</a></div>
                 </div>
             }
         </div>

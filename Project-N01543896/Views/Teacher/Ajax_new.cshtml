@@ -10,14 +10,6 @@
         <a class="navlink" href="/Teacher/List">Back To Teachers</a>
     </nav>
     <h2>New Teacher</h2>
-    @{
-        /* AJAX Request to add author */
-        /* No form submission needed */
-        /* button onclick will handle form submission */
-        /* Each item has an ID for validation && ajax submission */
-
-
-    }
     <div class="inputrow">
         <label for="TeacherFname">First Name:</label>
         <input type="text" id="TeacherFname" name="TeacherFname" />
@@ -38,8 +30,5 @@
             <input type="number" id="Salary" name="Salary" />
         </div>
     </div>
-    @{
-        //AddAuthor() is a JS method defined in /Scripts/authors.js
-    }
     <button onclick="AddTeacher();">Add Teacher</button>
 </div>
