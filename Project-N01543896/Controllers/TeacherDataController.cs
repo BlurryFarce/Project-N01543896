@@ -83,8 +83,8 @@ namespace Project_N01543896.Controllers
         /// </returns>
         /// <example>GET api/TeacherData/ListTeachersBySalary/55.30</example>
         [HttpGet]
-        [Route("api/TeacherData/ListTeachersBySalary/{salary}")]
-        public IEnumerable<Teacher> ListTeachersBySalary(decimal salary)
+        [Route("api/TeacherData/ListTeachersBySalary/{salary}/{salary2}")]
+        public IEnumerable<Teacher> ListTeachersBySalary(decimal salary, decimal salary2)
         {
             MySqlConnection Conn = School.AccessDatabase();
 
@@ -92,8 +92,9 @@ namespace Project_N01543896.Controllers
 
             MySqlCommand cmd = Conn.CreateCommand();
 
-            cmd.CommandText = "Select * from teachers where salary = @salary";
+            cmd.CommandText = "Select * from teachers where salary BETWEEN @salary AND @salary2";
             cmd.Parameters.AddWithValue("@salary", salary);
+            cmd.Parameters.AddWithValue("@salary2", salary2);
 
             cmd.Prepare();
 
@@ -237,6 +238,7 @@ namespace Project_N01543896.Controllers
         ///	"TeacherFname":"Vaibhav",
         ///	"TeacherLname":"Baria",
         ///	"EmployeeNumber":"T666",
+        ///	"Hiredate":"2025-10-23"
         ///	"Salary":"60"
         /// }
         /// </example>
@@ -244,6 +246,7 @@ namespace Project_N01543896.Controllers
         [EnableCors(origins: "*", methods: "*", headers: "*")]
         public void AddTeacher([FromBody] Teacher NewTeacher) {
 
+            if(!NewTeacher.IsValid()) return;
 
             MySqlConnection Conn = School.AccessDatabase();
 
@@ -254,10 +257,11 @@ namespace Project_N01543896.Controllers
             MySqlCommand cmd = Conn.CreateCommand();
 
             
-            cmd.CommandText = "INSERT INTO teachers (teacherfname, teacherlname, employeenumber, hiredate, salary) values (@TeacherFname,@TeacherLname,@EmployeeNumber, CURRENT_DATE(), @Salary)";
+            cmd.CommandText = "INSERT INTO teachers (teacherfname, teacherlname, employeenumber, hiredate, salary) values (@TeacherFname,@TeacherLname,@EmployeeNumber, @HireDate, @Salary)";
             cmd.Parameters.AddWithValue("@TeacherFname", NewTeacher.teacherFName);
             cmd.Parameters.AddWithValue("@TeacherLname", NewTeacher.teacherLName);
             cmd.Parameters.AddWithValue("@EmployeeNumber", NewTeacher.employeeNumber);
+            cmd.Parameters.AddWithValue("@HireDate", NewTeacher.hireDate);
             cmd.Parameters.AddWithValue("@Salary", NewTeacher.salary);
             cmd.Prepare();
 
@@ -271,7 +275,7 @@ namespace Project_N01543896.Controllers
         /// Deletes a teacher from the Database if the ID of that teacher exists.
         /// </summary>
         /// <param name="id">The ID of the Teacher.</param>
-        /// <example>POST /api/TeacherData/DeleteDelete/3 
+        /// <example>POST /api/TeacherData/Delete/3 
         /// redirects to Delete Confirmation page
         /// </example>
         [HttpPost]
@@ -303,6 +307,38 @@ namespace Project_N01543896.Controllers
 
         }
 
-       
+        /// <summary>
+        /// Updates information of a teacher from the Database.
+        /// </summary>
+        /// <param name="id">The ID of the Teacher.</param>
+        /// <example>POST /api/TeacherData/Update/3 
+        /// redirects to teacher/show/3 
+        /// showing the update teacher information
+        /// </example>
+        [HttpPost]
+        [EnableCors(origins: "*", methods: "*", headers: "*")]
+        public void UpdateTeacher(int id, [FromBody] Teacher teacherInfo) {
+
+            if (!teacherInfo.IsValid()) return;
+     
+            MySqlConnection conn = School.AccessDatabase();
+           
+            conn.Open();
+            
+            MySqlCommand cmd = conn.CreateCommand();
+
+            cmd.CommandText = "UPDATE teachers SET TeacherFname = @TeacherFname, TeacherLname = @TeacherLname, EmployeeNumber = @EmployeeNumber, HireDate = @HireDate, Salary = @Salary WHERE TeacherId = @TeacherId";
+            cmd.Parameters.AddWithValue("@TeacherFname", teacherInfo.teacherFName);
+            cmd.Parameters.AddWithValue("@TeacherLname", teacherInfo.teacherLName);
+            cmd.Parameters.AddWithValue("@EmployeeNumber", teacherInfo.employeeNumber);
+            cmd.Parameters.AddWithValue("@HireDate", teacherInfo.hireDate);
+            cmd.Parameters.AddWithValue("@Salary", teacherInfo.salary);
+            cmd.Parameters.AddWithValue("@TeacherId", id);
+            cmd.Prepare();
+
+            cmd.ExecuteNonQuery();
+
+            conn.Close();
+        }
     }
 }

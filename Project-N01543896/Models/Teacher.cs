@@ -20,7 +20,7 @@ namespace Project_N01543896.Models
         public bool IsValid() {
             bool valid = true;
 
-            if (teacherFName == null || teacherLName == null || employeeNumber == null || salary == null) {
+            if (teacherFName == null || teacherLName == null || employeeNumber == null || salary == 0) {
                 valid = false;
             }
             Debug.WriteLine("The model validity is : " + valid);

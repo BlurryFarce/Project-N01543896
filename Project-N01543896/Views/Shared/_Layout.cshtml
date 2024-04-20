@@ -19,8 +19,9 @@
                 </button>
                 <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Teachers", "Index", "Teacher/list", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Students", "Index", "Student/list", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Classes", "Index", "Classes/list", new { area = "" }, new { @class = "nav-link" })</li>
                     </ul>
                 </div>
             </div>
